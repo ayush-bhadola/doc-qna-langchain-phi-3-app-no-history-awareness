@@ -1,4 +1,0 @@
-**Project Title:** DocQnA: Document Question Answering with RAG Model
-
-**Description:**
-DocQnA is a robust document question answering (QA) application built using retrieval augmented generation (RAG) technology. This application enables users to ask queries related to their documents, which can be in various formats such as txt, docx, and pdf, without requiring any chat history awareness. Powered by Microsoft's 4-bit quantized Phi-3 model from Hugging Face and the Langchain framework, DocQnA efficiently processes user queries and retrieves accurate answers from the provided documents. With its user-friendly interface and powerful functionality, DocQnA simplifies the process of extracting information from textual documents, enhancing productivity and accessibility.
