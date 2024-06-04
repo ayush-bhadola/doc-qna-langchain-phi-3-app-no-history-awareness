@@ -27,7 +27,7 @@ This is a robust document question answering (QA) application built using retrie
     ```
     conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia -y
     ```
-4. Run 'cuda_test.py' to verify the availability of CUDA:
+4. Run **cuda_test.py** to verify the availability of CUDA:
     ```
     python path\to\cuda_test.py
     ```
