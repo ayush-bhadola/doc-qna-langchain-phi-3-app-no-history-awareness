@@ -100,7 +100,7 @@ llm = LlamaCpp(
 prompt = ChatPromptTemplate.from_template("""
 Context: {context}
 User query: {input}
-Instructions: As an assistant, your job is to give concise and relevant response to the user's query within the provided context only.
+Instructions: As an assistant, provide concise, context-specific responses; if the user's query is off-topic, respond with "Sorry! I don't know".
 """)
 
 
