@@ -6,6 +6,7 @@ from langchain_community.vectorstores import FAISS
 from langchain_community.document_loaders import DirectoryLoader, PyMuPDFLoader
 from langchain_community.llms import LlamaCpp
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.callbacks import CallbackManager, StreamingStdOutCallbackHandler
 import torch
 import tempfile
 import os
@@ -52,7 +53,7 @@ loader = DirectoryLoader(DATA_PATH, glob="**/*", loader_cls=PyMuPDFLoader)
 pdf_docs = loader.load()
 
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=200,
+    chunk_size=100,
     chunk_overlap=40,
     length_function=len,
     is_separator_regex=True
@@ -70,28 +71,40 @@ retriever = FAISS.from_documents(pdf_docs_text, embeddings).as_retriever()
 
 model_path='models\Phi-3-mini-4k-instruct-q4.gguf'
 
-n_gpu_layers = 1 
+
+
+##################### Config #####################
+
+# Callbacks support token-wise streaming
+callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
+
+n_gpu_layers = -1 
 n_batch = 512
+
 
 llm = LlamaCpp(
     model_path=model_path,
+    temperature = 0.4,
+    max_tokens = 512,
     n_gpu_layers=n_gpu_layers,
     n_batch=n_batch,
-    n_ctx=1024,
-    f16_kv=True, 
+    f16_kv=True,
+    top_p=1,
+    callback_manager=callback_manager,
     verbose=True,
 )
+##################################################
 
 
 
-prompt = ChatPromptTemplate.from_template("""\nYou are here solely to assist with user inquiries within the confines of the provided context:
+prompt = ChatPromptTemplate.from_template("""\nYou're an AI assistant here to help with user inquiries within the given context.
 
 <context>
 {context}
 </context>
 
 Question: {input}
-
+Your Answer:
 \n""")
 
 
