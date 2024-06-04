@@ -58,3 +58,4 @@ This is a robust document question answering (QA) application built using retrie
     ```
     python app_cmd.py
     ```
+    To stop the question-answering loop of 'app_cmd.py' in the command line, you have two options: Press ##Ctrl+C or Type ##exit or ##quit
