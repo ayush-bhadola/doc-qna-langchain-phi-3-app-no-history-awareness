@@ -53,8 +53,8 @@ loader = DirectoryLoader(DATA_PATH, glob="**/*", loader_cls=PyMuPDFLoader)
 pdf_docs = loader.load()
 
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=100,
-    chunk_overlap=40,
+    chunk_size=50,
+    chunk_overlap=20,
     length_function=len,
     is_separator_regex=True
 )
@@ -79,33 +79,26 @@ model_path='models\Phi-3-mini-4k-instruct-q4.gguf'
 callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
 
 n_gpu_layers = -1 
-n_batch = 512
+n_batch = 500
 
 
 llm = LlamaCpp(
     model_path=model_path,
     temperature = 0.4,
-    max_tokens = 512,
+    max_tokens = 256,
     n_gpu_layers=n_gpu_layers,
     n_batch=n_batch,
     f16_kv=True,
-    top_p=1,
     callback_manager=callback_manager,
     verbose=True,
 )
 ##################################################
 
-
-
-prompt = ChatPromptTemplate.from_template("""\nYou're an AI assistant here to help with user inquiries within the given context.
-
-<context>
-{context}
-</context>
-
-Question: {input}
-Your Answer:
-\n""")
+prompt = ChatPromptTemplate.from_template("""
+Context: {context}
+User query: {input}
+Instructions: As an assistant, your job is to give concise and relevant response to the user's query within the provided context only.
+""")
 
 
 document_chain = create_stuff_documents_chain(llm, prompt)
