@@ -1,7 +1,7 @@
 ## RAG Based Document Question Answering Application
 
 ### Description:
-This is a robust document question answering (QA) application built using retrieval augmented generation (RAG) technology. This application enables users to ask queries related to their documents, which can be in various formats such as txt, docx, and pdf, without requiring any chat history awareness. Powered by Microsoft's 4-bit quantized Phi-3 model from Hugging Face and the Langchain framework, DocQnA efficiently processes user queries and retrieves accurate answers from the provided documents. With its user-friendly interface and powerful functionality, DocQnA simplifies the process of extracting information from textual documents, enhancing productivity and accessibility.
+This is a robust document question answering (QA) application built using retrieval augmented generation (RAG) technology. This application enables users to ask queries related to their documents, which can be in various formats such as txt, docx, and pdf, without requiring any chat history awareness. Powered by Microsoft's 4-bit quantized **Phi-3** model from Hugging Face and the Langchain framework, DocQnA efficiently processes user queries and retrieves accurate answers from the provided documents. With its user-friendly interface and powerful functionality, DocQnA simplifies the process of extracting information from textual documents, enhancing productivity and accessibility.
 
 ## Setup Instructions
 
@@ -31,7 +31,7 @@ This is a robust document question answering (QA) application built using retrie
     ```
     python path\to\cuda_test.py
     ```
-5. Upon successful installation of local PyTorch drivers, you'll receive the message 'CUDA is available.' Otherwise, you can run the application on your local CPU.
+5. Upon successful installation of local PyTorch drivers, you'll receive the message **CUDA is available.** Otherwise, you can run the application on your local CPU.
 
 ### 3. Install Dependencies:
 1. Install all necessary libraries by executing the command:
@@ -48,8 +48,8 @@ This is a robust document question answering (QA) application built using retrie
     pip install faiss-cpu
     ```
     (In this example, faiss-gpu was used.)
-3. Download the model from the provided link and place it in the 'models' folder in your working directory. Model download link: [Model Download Link](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-gguf/blob/main/Phi-3-mini-4k-instruct-q4.gguf)
-4. Place your text data in the 'data' folder. (Example: text data of docx, pdf, and txt formats)
+3. Download the model from the provided link and place it in the **models** folder in your working directory. Model download link: [Model Download Link](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-gguf/blob/main/Phi-3-mini-4k-instruct-q4.gguf)
+4. Place your text data in the **data** folder. (Example: text data of docx, pdf, and txt formats)
 5. Run your AI application using the following command:
     ```
     streamlit run app_ui.py
@@ -58,4 +58,4 @@ This is a robust document question answering (QA) application built using retrie
     ```
     python app_cmd.py
     ```
-    To stop the question-answering loop of 'app_cmd.py' in the command line, you have two options: Press ##Ctrl+C or Type ##exit or ##quit
+    To stop the question-answering loop of **app_cmd.py** in the command line, you have two options: Press **Ctrl+C** or Type **exit** or **quit**
