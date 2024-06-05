@@ -53,8 +53,8 @@ loader = DirectoryLoader(DATA_PATH, glob="**/*", loader_cls=PyMuPDFLoader)
 pdf_docs = loader.load()
 
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=100,
-    chunk_overlap=40,
+    chunk_size=50,
+    chunk_overlap=20,
     length_function=len,
     is_separator_regex=True
 )
