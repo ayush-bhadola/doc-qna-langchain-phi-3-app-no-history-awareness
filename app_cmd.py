@@ -53,8 +53,8 @@ loader = DirectoryLoader(DATA_PATH, glob="**/*", loader_cls=PyMuPDFLoader)
 pdf_docs = loader.load()
 
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=50,
-    chunk_overlap=20,
+    chunk_size=100,
+    chunk_overlap=40,
     length_function=len,
     is_separator_regex=True
 )
@@ -86,7 +86,9 @@ n_batch = 500
 llm = LlamaCpp(
     model_path=model_path,
     temperature = 0.4,
-    max_tokens = 1000,
+    max_tokens = 2000,
+    stop=["<|end|>"], 
+    echo=True, 
     n_gpu_layers=n_gpu_layers,
     n_batch=n_batch,
     f16_kv=True,
@@ -95,12 +97,8 @@ llm = LlamaCpp(
 )
 ##################################################
 
-
-
 prompt = ChatPromptTemplate.from_template("""
-Context: {context}
-User query: {input}
-Instructions: As an assistant, provide concise, context-specific responses; if the user's query is off-topic, respond with "Sorry! I don't know".
+<|user|>\nContext: {context}\nUser query: {input}\nInstructions: I'm an AI assistant who gives only context-specific responses <|end|>\n<|assistant|>
 """)
 
 
