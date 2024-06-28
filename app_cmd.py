@@ -67,7 +67,7 @@ pdf_docs_text = text_splitter.split_documents(pdf_docs)
 DB_FAISS_PATH = 'vectorestore_new/db_faiss'
 embeddings = HuggingFaceEmbeddings(model_name = 'sentence-transformers/all-MiniLM-L6-V2', model_kwargs = {"device": "cuda"} if torch.cuda.is_available() else {"device": "cpu"})
 
-retriever = FAISS.from_documents(pdf_docs_text, embeddings).as_retriever()
+retriever = FAISS.from_documents(pdf_docs_text, embeddings).as_retriever(search_type="mmr")
 
 
 model_path='models\Phi-3-mini-4k-instruct-q4.gguf'
@@ -85,8 +85,8 @@ n_batch = 500
 
 llm = LlamaCpp(
     model_path=model_path,
-    temperature = 0.4,
-    max_tokens = 2000,
+    temperature = 0.0,
+    max_tokens = 512,
     stop=["<|end|>"], 
     echo=True, 
     n_gpu_layers=n_gpu_layers,
@@ -102,9 +102,12 @@ prompt = ChatPromptTemplate.from_template("""
 """)
 
 
-document_chain = create_stuff_documents_chain(llm, prompt)
-
-retrieval_chain = create_retrieval_chain(retriever, document_chain)
+chain = (
+    {"context": retriever, "input": RunnablePassthrough()}
+    | prompt
+    | llm
+    | StrOutputParser()
+)
 
 
 # cmd test
@@ -115,8 +118,7 @@ while True:
         sys.exit()
 
 
-    response = retrieval_chain.invoke({"context": pdf_docs, "input": query})
-    print('\n'+response['answer']+'\n')
+    response = chain.invoke(query)
     torch.cuda.empty_cache()
     delete_temp_files()
 
